@@ -1,0 +1,114 @@
+package com.js.springboot.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.js.springboot.dao.PersonDao;
+import com.js.springboot.dto.Person;
+import com.js.springboot.dto.ResponseStructure;
+import com.js.springboot.exception.NoIdFoundException;
+
+@Service
+public class PersonService {
+
+	@Autowired
+	PersonDao personDao;
+
+	public ResponseStructure<Person> savePerson(Person p) {
+		ResponseStructure<Person> pResponseStructure = new ResponseStructure<Person>();
+		Person person = personDao.savePerson(p);
+		if (person != null) {
+			pResponseStructure.setStatusCode(HttpStatus.CREATED.value());
+			pResponseStructure.setMessage("Data saved successfully");
+			pResponseStructure.setData(person);
+			return pResponseStructure;
+		} else {
+			pResponseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+			pResponseStructure.setMessage("Data failed to save");
+			pResponseStructure.setData(person);
+			return pResponseStructure;
+		}
+	}
+
+	public ResponseStructure<List<Person>> getAllPersons() {
+		ResponseStructure<List<Person>> pResponseStructure = new ResponseStructure<List<Person>>();
+		List<Person> persons = personDao.getAllPersons();
+		if (persons.size() > 0) {
+			pResponseStructure.setStatusCode(HttpStatus.FOUND.value());
+			pResponseStructure.setMessage("All persons date");
+			pResponseStructure.setData(persons);
+			return pResponseStructure;
+		} else {
+			pResponseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+			pResponseStructure.setMessage("No persons found");
+			pResponseStructure.setData(persons);
+			return pResponseStructure;
+		}
+
+	}
+
+	public ResponseStructure<Person> getPersonById(int id) {
+		ResponseStructure<Person> pResponseStructure = new ResponseStructure<Person>();
+		Person person = personDao.getPersonById(id);
+		if (person != null) {
+			pResponseStructure.setStatusCode(HttpStatus.FOUND.value());
+			pResponseStructure.setMessage("Found the person");
+			pResponseStructure.setData(person);
+			return pResponseStructure;
+		} else {
+			throw new NoIdFoundException("No person with given Id");
+		}
+
+	}
+
+	public ResponseStructure<String> deleteById(int id) {
+		ResponseStructure<String> pResponseStructure = new ResponseStructure<String>();
+		boolean b = personDao.deleteById(id);
+		if (b) {
+			pResponseStructure.setStatusCode(HttpStatus.FOUND.value());
+			pResponseStructure.setMessage("Found the person");
+			pResponseStructure.setData("deleted");
+			return pResponseStructure;
+		} else {
+			pResponseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+			pResponseStructure.setMessage("No person found");
+			pResponseStructure.setData("not found");
+			return pResponseStructure;
+		}
+
+	}
+
+	public ResponseStructure<Person> updateById(int id, Person p) {
+		ResponseStructure<Person> pResponseStructure = new ResponseStructure<Person>();
+		Person person = personDao.updateById(id, p);
+		if (person != null) {
+			pResponseStructure.setStatusCode(HttpStatus.FOUND.value());
+			pResponseStructure.setMessage("Found the person");
+			pResponseStructure.setData(person);
+			return pResponseStructure;
+		} else {
+			pResponseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+			pResponseStructure.setMessage("No person found");
+			pResponseStructure.setData(person);
+			return pResponseStructure;
+		}
+
+	}
+
+	public ResponseStructure<String> loginPerson(String email, long phone) {
+		ResponseStructure<String> pResponseStructure = new ResponseStructure<>();
+		Person person = personDao.loginPerson(email, phone);
+		if (person != null) {
+			pResponseStructure.setStatusCode(HttpStatus.ACCEPTED.value());
+			pResponseStructure.setMessage("Login successful");
+			pResponseStructure.setData("data");
+			return pResponseStructure;
+		} else {
+			throw new NoIdFoundException("Failed to login");
+		}
+	}
+
+}
