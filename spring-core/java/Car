@@ -1,0 +1,16 @@
+package com.js.demo;
+
+public class Car {
+
+	Engine e; 
+	public void move() {
+		System.out.println("Car is moving");
+		
+	}
+	public Engine getE() {
+		return e;
+	}
+	public void setE(Engine e) {
+		this.e = e;
+	}
+}
