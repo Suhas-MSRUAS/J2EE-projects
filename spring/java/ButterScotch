@@ -1,0 +1,13 @@
+package com.js.ac;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+@Primary
+@Component
+public class ButterScotch implements Icecream{
+	
+	public void eat() {
+		System.out.println("Eating butterscoch icecream");
+	}
+
+}
