@@ -1,0 +1,93 @@
+package com.js.dao;
+
+import java.util.List;
+
+import javax.management.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import com.js.dto.Mobile;
+
+public class MobileCRUD {
+	
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("uday");
+
+	
+	public static boolean saveMobile(Mobile m) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		
+		et.begin();
+		em.persist(m);
+		et.commit();
+		
+		Mobile m2 = em.find(Mobile.class, m.getId());
+		if(m2!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public static Mobile getMobileById(int id) {
+		EntityManager em = emf.createEntityManager();
+		return em.find(Mobile.class, id);
+	}
+	
+	public static boolean deleteMobileById(int id) {
+		EntityManager em = emf.createEntityManager();
+		Mobile m = em.find(Mobile.class, id);
+		if(m!=null) {
+			
+			EntityTransaction et = em.getTransaction();
+			
+			et.begin();
+			em.remove(m);
+			et.commit();
+			
+			return true;
+		}
+		else {
+			return false;
+		}
+	
+	
+	
+	}
+
+	public static boolean updateMobileById(int id, Mobile m) {
+		EntityManager em = emf.createEntityManager();
+		Mobile m2 = em.find(Mobile.class, id);
+		if(m2!= null) {
+			EntityTransaction et = em.getTransaction();
+			m.setId(id);
+			et.begin();
+			em.merge(m);
+			et.commit();
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public static List<Mobile>getAllMobiles(){
+		EntityManager em = emf.createEntityManager();
+		String query = "select m from Mobile m";
+		javax.persistence.Query q = em.createQuery(query);
+		return q.getResultList();
+		
+		
+			
+	}
+	
+	public static List<Mobile> getMobileByBrand(String brand){
+		EntityManager em = emf.createEntityManager();
+		String query = "select m from Mobile m where m.brand=?1";
+		javax.persistence.Query q= em.createQuery(query);
+		q.setParameter(1, brand);
+		return q.getResultList();
+	
+	}
+}
