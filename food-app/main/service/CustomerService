@@ -1,0 +1,51 @@
+package com.springboot.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.springboot.dao.CustomerDao;
+import com.springboot.dto.Customer;
+import com.springboot.dto.ResponseStructure;
+
+@Service
+public class CustomerService {
+
+	@Autowired
+	CustomerDao customerDao;
+	
+	public ResponseStructure<Customer> saveCustomer(Customer c){
+		ResponseStructure<Customer> cResponseStructure = new ResponseStructure<Customer>();
+		Customer customer = customerDao.saveCustomer(c);
+		if(customer!=null) {
+			cResponseStructure.setStatusCode(HttpStatus.CREATED.value());
+			cResponseStructure.setMessage("data saved successfully");
+			cResponseStructure.setData(customer);
+			return cResponseStructure;
+		}else {
+			cResponseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+			cResponseStructure.setMessage("data failed to save");
+			cResponseStructure.setData(customer);
+			return cResponseStructure;
+		}
+	}
+	
+	public ResponseStructure<String> loginCustomer(String email, long phone){
+		ResponseStructure<String> cResponseStructure = new  ResponseStructure<String>();
+		Customer customer = customerDao.loginCustomer(email, phone);
+		if(customer!=null) {
+			cResponseStructure.setStatusCode(HttpStatus.ACCEPTED.value());
+			cResponseStructure.setMessage("login successful");
+			cResponseStructure.setData("data");
+			return cResponseStructure;
+		}else {
+			cResponseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+			cResponseStructure.setMessage("login unsuccessful!");
+			cResponseStructure.setData("data");
+			return cResponseStructure;
+		}
+	}
+}
+		
+	
+
