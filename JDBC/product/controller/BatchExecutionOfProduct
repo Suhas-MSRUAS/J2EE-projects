@@ -1,0 +1,67 @@
+package com.js.controller;
+
+import java.util.ArrayList;
+
+import com.js.dao.ProductCRUD;
+import com.js.dto.Product;
+
+public class BatchExecutionOfProduct {
+	public static void main(String[] args) {
+		ArrayList<Product> products = new ArrayList<>();
+		
+		Product p1 = new Product();
+		p1.setId(16);
+		p1.setName("TV");
+		p1.setBrand("samsung");
+		p1.setQuantity(5);
+		p1.setPrice(50000);
+		
+		Product p2 = new Product();
+		p2.setId(15);
+		p2.setName("TV");
+		p2.setBrand("samsung");
+		p2.setQuantity(5);
+		p2.setPrice(50000);
+		
+		Product p3 = new Product();
+		p3.setId(14);
+		p3.setName("TV");
+		p3.setBrand("samsung");
+		p3.setQuantity(5);
+		p3.setPrice(50000);
+		
+		Product p4 = new Product();
+		p4.setId(13);
+		p4.setName("TV");
+		p4.setBrand("samsung");
+		p4.setQuantity(5);
+		p4.setPrice(50000);
+		
+		Product p5 = new Product();
+		p5.setId(12);
+		p5.setName("TV");
+		p5.setBrand("samsung");
+		p5.setQuantity(5);
+		p5.setPrice(50000);
+		
+		products.add(p1);
+		products.add(p2);
+		products.add(p3);
+		products.add(p4);
+		products.add(p5);
+		
+		ProductCRUD pc = new ProductCRUD();
+		int[] arr = pc.batchExecution(products);
+		if(arr.length>0) {
+			for(int a : arr) {
+				System.out.println(a);
+			}
+			System.out.println("inserted successfully");
+		}else {
+			System.out.println("failed");
+		}
+		
+		
+	}
+
+}
