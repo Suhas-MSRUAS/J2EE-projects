@@ -1,0 +1,23 @@
+package com.springboot.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.springboot.dto.Customer;
+import com.springboot.repository.CustomerRepository;
+
+@Repository
+public class CustomerDao {
+	@Autowired
+	CustomerRepository customerRepository;
+	
+	
+	public Customer saveCustomer(Customer c) {
+		return customerRepository.save(c);
+	}
+
+	
+	public Customer loginCustomer(String email, long phone) {
+		return customerRepository.loginCustomer(email, phone);
+	}
+}
