@@ -1,0 +1,15 @@
+package com.js.controller;
+
+import com.js.dao.MobileCRUD;
+
+public class DeleteMobileById {
+	public static void main(String[] args) {
+		boolean b = MobileCRUD.deleteMobileById(5);
+		if(b) {
+			System.out.println("deleted");
+		}else {
+			System.out.println("failed");
+		}
+	}
+
+}
