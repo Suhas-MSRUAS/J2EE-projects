@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%
+		HttpSession http = request.getSession();
+	if(http.getAttribute("xy")!=null){
+		if(http.getAttribute("xy").equals("xyz")){
+	%>
+	<h1>Welcome to friends page</h1>
+	<%
+		}}else{
+			response.sendRedirect("login.jsp");
+		}
+		
+	%>
+	<h3> <a href="logout">Logout</a></h3>
+</body>
+</html>
