@@ -1,0 +1,22 @@
+package com.springboot.dto;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Login {
+
+	@Autowired
+	private String email;
+	private long phone;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public long getPhone() {
+		return phone;
+	}
+	public void setPhone(long phone) {
+		this.phone = phone;
+	}
+}
